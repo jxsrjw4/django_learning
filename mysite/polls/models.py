@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.utils import timezone
+import  datetime
 # Create your models here.
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -7,6 +8,11 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text;
+
+    def was_publish_recently(self):
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        return True if self.pub_date>=time else False
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
