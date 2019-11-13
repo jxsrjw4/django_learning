@@ -13,6 +13,9 @@ class Question(models.Model):
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         return True if self.pub_date>=time else False
 
+    was_publish_recently.admin_order_field = 'pub_date'
+    was_publish_recently.boolean = True
+    was_publish_recently.short_description = 'Published recently?'
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
